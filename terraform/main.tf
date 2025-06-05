@@ -80,7 +80,7 @@ resource "azurerm_linux_virtual_machine" "main" {
   location                        = azurerm_resource_group.main.location
   size                            = var.vm_size
   admin_username                  = "adminuser"
-  admin_password                  = "adminuser1234567"
+  admin_password                  = "Adminuser@1234567"
   disable_password_authentication = false
   network_interface_ids           = [azurerm_network_interface.main.id]
 
