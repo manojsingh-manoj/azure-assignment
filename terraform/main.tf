@@ -108,6 +108,8 @@ resource "azurerm_linux_virtual_machine" "main" {
               apt-get install -y docker-ce docker-ce-cli containerd.io
               systemctl start docker
               systemctl enable docker
+              # Add the user to the docker group to allow running docker without sudo
+              usermod -aG docker adminuser
               EOF
   )
 }
