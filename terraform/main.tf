@@ -84,11 +84,6 @@ resource "azurerm_linux_virtual_machine" "main" {
   disable_password_authentication = false
   network_interface_ids = [azurerm_network_interface.main.id]
 
-  /*admin_ssh_key {
-    username   = "adminuser"
-    public_key = file("~/.ssh/id_rsa.pub") # Ensure this file exists or replace with your SSH public key
-  }*/
-
   os_disk {
     caching              = "ReadWrite"
     storage_account_type = "Standard_LRS"
