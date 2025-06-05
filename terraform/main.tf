@@ -39,17 +39,17 @@ resource "azurerm_network_security_group" "main" {
 
 # Create NSG rules for open ports
 resource "azurerm_network_security_rule" "open_ports" {
-  for_each                   = toset([for port in var.open_ports : tostring(port)])
-  name                       = "allow-port-${each.key}"
-  priority                   = 100 + index(var.open_ports, tonumber(each.key))
-  direction                  = "Inbound"
-  access                     = "Allow"
-  protocol                   = "Tcp"
-  source_port_range          = "*"
-  destination_port_range     = each.key
-  source_address_prefix      = "*"
-  destination_address_prefix = "*"
-  resource_group_name        = azurerm_resource_group.main.name
+  for_each                    = toset([for port in var.open_ports : tostring(port)])
+  name                        = "allow-port-${each.key}"
+  priority                    = 100 + index(var.open_ports, tonumber(each.key))
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_range      = each.key
+  source_address_prefix       = "*"
+  destination_address_prefix  = "*"
+  resource_group_name         = azurerm_resource_group.main.name
   network_security_group_name = azurerm_network_security_group.main.name
 }
 
@@ -75,14 +75,14 @@ resource "azurerm_network_interface_security_group_association" "main" {
 
 # Create the Linux VM
 resource "azurerm_linux_virtual_machine" "main" {
-  name                = "vm-assignment"
-  resource_group_name = azurerm_resource_group.main.name
-  location            = azurerm_resource_group.main.location
-  size                = var.vm_size
-  admin_username      = "adminuser"
-  admin_password      = "adminuser1234567"
+  name                            = "vm-assignment"
+  resource_group_name             = azurerm_resource_group.main.name
+  location                        = azurerm_resource_group.main.location
+  size                            = var.vm_size
+  admin_username                  = "adminuser"
+  admin_password                  = "adminuser1234567"
   disable_password_authentication = false
-  network_interface_ids = [azurerm_network_interface.main.id]
+  network_interface_ids           = [azurerm_network_interface.main.id]
 
   os_disk {
     caching              = "ReadWrite"
