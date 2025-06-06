@@ -76,14 +76,20 @@ resource "azurerm_network_interface_security_group_association" "main" {
 
 # Create the Linux VM
 resource "azurerm_linux_virtual_machine" "main" {
-  name                            = "vm-assignment"
-  resource_group_name             = azurerm_resource_group.main.name
-  location                        = azurerm_resource_group.main.location
-  size                            = var.vm_size
-  admin_username                  = "adminuser"
-  admin_password                  = "Adminuser@1234567"
+  name                = "vm-assignment"
+  resource_group_name = azurerm_resource_group.main.name
+  location            = azurerm_resource_group.main.location
+  size                = var.vm_size
+  admin_username      = "adminuser"
+  #admin_password                  = "Adminuser@1234567"
   disable_password_authentication = false
   network_interface_ids           = [azurerm_network_interface.main.id]
+
+  admin_ssh_key {
+    username = "adminuser"
+    #public_key = file("~/.ssh/id_rsa.pub") # Ensure this file exists or replace with your SSH public key
+    public_key = file("${path.module}/id_rsa.pub")
+  }
 
   os_disk {
     caching              = "ReadWrite"
