@@ -44,8 +44,10 @@ jobs:
 
     # Plan Terraform deployment
     - name: Terraform Plan
+      run: terraform plan -out=tfplan
       working-directory: terraform
 
     # Apply Terraform configuration (only on push to main)
     - name: Terraform Apply
+      run: terraform apply -auto-approve tfplan
       working-directory: terraform
