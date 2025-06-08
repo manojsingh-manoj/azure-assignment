@@ -1,6 +1,2 @@
-Adding dummy lines
-New line added
-
-again new line added
-
-add new line 6:18
+Creates Virtual Machine using Terraform code. 
+Version:1

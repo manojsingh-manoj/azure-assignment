@@ -39,6 +39,6 @@ variable "rg_name" {
 variable "location" {
   description = "Name of the Azure region name"
   type        = string
-  default     = "centralindia"
+  default     = "France Central"
 }
 
