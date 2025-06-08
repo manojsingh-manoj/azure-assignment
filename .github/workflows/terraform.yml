@@ -23,7 +23,6 @@ jobs:
       ARM_CLIENT_SECRET: ${{ secrets.AZURE_AD_CLIENT_SECRET }}
       ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       ARM_TENANT_ID: ${{ secrets.AZURE_AD_TENANT_ID }}
-      ENVIRONMENT: ${{ github.event.inputs.environment }}
 
     steps:
     # Checkout the repository
@@ -35,7 +34,17 @@ jobs:
       run: |
         ls -ltra
         echo ${{ secrets.VM_PUBLIC_KEY }} > terraform/id_rsa.pub
-
+    
+    # Determine Environment
+    - name: Determine Environment
+      id: env
+      run: |
+        if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+          echo "env=${{ github.event.inputs.environment }}" >> $GITHUB_OUTPUT
+        else
+          echo "env=dev" >> $GITHUB_OUTPUT
+        fi  
+    
     # Setup Terraform
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v3
@@ -44,7 +53,7 @@ jobs:
 
     # Initialize Terraform
     - name: Terraform Init
-      run: terraform init
+      run: terraform init -backend-config="key=terraform-${{ steps.env.outputs.env }}.tfstate"
       working-directory: terraform
 
     # Validate Terraform configuration
@@ -65,12 +74,8 @@ jobs:
     # Apply Terraform configuration (only on push to main)
     - name: Terraform Apply
       working-directory: terraform
-      run: |
-       if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
-          terraform apply -auto-approve --var-file="terraform-${{ github.event.inputs.environment }}.tfvars" tfplan
-       else
-          terraform apply -auto-approve --var-file="terraform-dev.tfvars" tfplan
-       fi  
+      run: terraform apply -auto-approve --var-file="terraform-${{ steps.env.outputs.env }}.tfvars" tfplan
+      
 
     # Apply Terraform configuration (only on push to main)
     # - name: Terraform Apply
