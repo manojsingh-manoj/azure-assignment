@@ -25,7 +25,7 @@ jobs:
       run: |
         pwd
         ls -ltra
-        echo ${{ secrets.VM_PUBLIC_KEY }} > /terraform/id_rsa.pub
+        echo ${{ secrets.VM_PUBLIC_KEY }} > terraform/id_rsa.pub
         ls -ltra
         pwd
 
