@@ -33,7 +33,7 @@ variable "acr_name" {
 variable "rg_name" {
   description = "Name of the Azure Resource Group"
   type        = string
-  default     = "rg-assignment1"
+  default     = "rg-assignment"
 }
 
 variable "location" {

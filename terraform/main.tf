@@ -1,6 +1,6 @@
 # Create a resource group
 resource "azurerm_resource_group" "main" {
-  name     = var.rg_name
+  name     = "${var.rg_name}-${var.environment}"
   location = var.location
 }
 
