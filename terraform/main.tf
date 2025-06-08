@@ -76,7 +76,7 @@ resource "azurerm_network_interface_security_group_association" "main" {
 
 # Create the Linux VM
 resource "azurerm_linux_virtual_machine" "main" {
-  name                = "vm-assignment"
+  name                = "vm-assignment-${var.environment}"
   resource_group_name = azurerm_resource_group.main.name
   location            = azurerm_resource_group.main.location
   size                = var.vm_size
