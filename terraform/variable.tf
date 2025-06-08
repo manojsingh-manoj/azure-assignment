@@ -11,7 +11,7 @@ variable "environment" {
 variable "vm_size" {
   description = "Azure VM size"
   type        = string
-  default     = "Standard_B2s"
+  default     = "Standard_D2s_v3"
 }
 
 variable "open_ports" {
@@ -41,3 +41,4 @@ variable "location" {
   type        = string
   default     = "centralindia"
 }
+
