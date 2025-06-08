@@ -5,4 +5,4 @@ environment = "dev"
 vm_size = "Standard_D2s_v3"
 
 # Ports to open in the network security group
-open_ports = [22, 80]
+open_ports = [22, 80, 8080]
