@@ -68,13 +68,13 @@ jobs:
 
     # Plan Terraform deployment
     - name: Terraform Plan
-      run: terraform plan -out=tfplan
+      run: terraform plan --var-file="terraform-${{ steps.env.outputs.env }}.tfvars" -out=tfplan
       working-directory: terraform
 
     # Apply Terraform configuration (only on push to main)
     - name: Terraform Apply
       working-directory: terraform
-      run: terraform apply -auto-approve --var-file="terraform-${{ steps.env.outputs.env }}.tfvars" tfplan
+      run: terraform apply -auto-approve tfplan
       
 
     # Apply Terraform configuration (only on push to main)
