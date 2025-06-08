@@ -1,10 +1,9 @@
 name: 'Terraform'
 
 on:
-  # push:
-  #   branches:
-  #   - main
-  # pull_request:
+  push:
+    branches:
+    - main
   workflow_dispatch:
 
 jobs:
@@ -20,6 +19,15 @@ jobs:
     # Checkout the repository
     - name: Checkout code
       uses: actions/checkout@v4
+        
+    # Setup Terraform
+    - name: Save PrivateKey
+      run: |
+        pwd
+        ls -ltra
+        echo ${{ secrets.VM_PUBLIC_KEY }} > /terraform/id_rsa.pub
+        ls -ltra
+        pwd
 
     # Setup Terraform
     - name: Setup Terraform
